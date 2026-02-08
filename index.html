@@ -1,11 +1,10 @@
-l<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Sanjana ❤️</title>
 
-<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Pacifico&family=Handlee&display=swap" rel="stylesheet">
 
 <style>
@@ -30,7 +29,6 @@ body {
   animation: floatUp 6s linear infinite;
   opacity: 0.6;
 }
-
 @keyframes floatUp {
   from { transform: translateY(0); opacity: 0.7; }
   to { transform: translateY(-110vh); opacity: 0; }
@@ -45,12 +43,6 @@ body {
   border-radius: 26px;
   text-align: center;
   box-shadow: 0 20px 45px rgba(0,0,0,0.25);
-  animation: popIn 0.8s ease;
-}
-
-@keyframes popIn {
-  from { transform: scale(0.9); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
 }
 
 h1 {
@@ -78,9 +70,7 @@ h1 {
   cursor: pointer;
 }
 
-.option:hover {
-  background: #ffccd5;
-}
+.option:hover { background: #ffccd5; }
 
 .reward {
   font-size: 14px;
@@ -88,7 +78,6 @@ h1 {
   margin-top: 10px;
 }
 
-/* Valentine buttons */
 .yes {
   background: #ff4d6d;
   color: white;
@@ -125,11 +114,11 @@ h1 {
 
   <div id="options">
     <button class="option" onclick="wrong()">Online</button>
-    <button class="option" onclick="wrong()">Kotak parking lot</button>
-    <button class="option" onclick="wrong()">Rizz Café</button>
     <button class="option" onclick="correct('Yayyy! You got it right 💖 You deserve a chocolate ice cream 🍫🍦')">
-      During Diwali 🎆
+      Kotak parking lot 🚗
     </button>
+    <button class="option" onclick="wrong()">Rizz Café</button>
+    <button class="option" onclick="wrong()">During Diwali 🎆</button>
   </div>
 
   <div class="reward" id="reward"></div>
@@ -138,16 +127,16 @@ h1 {
 <script>
 /* Floating hearts */
 setInterval(() => {
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.innerText = "💖";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.animationDuration = (4 + Math.random() * 3) + "s";
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 7000);
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.innerText = "💖";
+  h.style.left = Math.random() * 100 + "vw";
+  h.style.animationDuration = (4 + Math.random() * 3) + "s";
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 7000);
 }, 500);
 
-/* Music (mobile safe) */
+/* Music */
 let musicStarted = false;
 function startMusic() {
   if (!musicStarted) {
@@ -165,7 +154,6 @@ function wrong() {
 
 function correct(msg) {
   document.getElementById("reward").innerText = msg;
-
   setTimeout(() => {
     document.getElementById("reward").innerText = "";
     next();
@@ -173,9 +161,12 @@ function correct(msg) {
 }
 
 function next() {
+  const q = document.getElementById("question");
+  const o = document.getElementById("options");
+
   if (step === 1) {
-    question.innerText = "What food do I like the most?";
-    options.innerHTML = `
+    q.innerText = "What food do I like the most?";
+    o.innerHTML = `
       <button class="option" onclick="correct('Yaaa! Correct answer 💖 You deserve a Kinder Joy 🥚✨')">Pizza 🍕</button>
       <button class="option" onclick="wrong()">Pav Bhaji</button>
       <button class="option" onclick="wrong()">Naan & Paneer Tikka Masala</button>
@@ -184,8 +175,8 @@ function next() {
     step++;
   }
   else if (step === 2) {
-    question.innerText = "How many dates have we been on so far?";
-    options.innerHTML = `
+    q.innerText = "How many dates have we been on so far?";
+    o.innerHTML = `
       <button class="option" onclick="wrong()">8–10 times</button>
       <button class="option" onclick="wrong()">11–13 times</button>
       <button class="option" onclick="correct('Yayyy 💕 You remember everything! Ice cream + chocolate for you 🍦🍫')">14–16 times</button>
@@ -199,7 +190,7 @@ function next() {
 }
 
 function finalQuestion() {
-  card.innerHTML = `
+  document.getElementById("card").innerHTML = `
     <h1>One last question, Sanju 🤍</h1>
     <div class="question">Will you be my Valentine?</div>
     <button class="yes" onclick="yesClick()">Yes 💖</button>
@@ -207,12 +198,12 @@ function finalQuestion() {
   `;
 
   const noBtn = document.getElementById("noBtn");
-  let count = 0;
+  let i = 0;
 
   noBtn.addEventListener("mouseover", () => {
     noBtn.style.transform = \`translate(\${Math.random()*200-100}px,\${Math.random()*200-100}px)\`;
-    noBtn.innerText = noTexts[count % noTexts.length];
-    count++;
+    noBtn.innerText = noTexts[i % noTexts.length];
+    i++;
   });
 }
 
