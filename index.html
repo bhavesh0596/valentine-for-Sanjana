@@ -92,10 +92,6 @@ h1{
 
 <body>
 
-<audio id="bgMusic" loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7c8b3c1e1c.mp3">
-</audio>
-
 <div class="card" id="card">
   <h1>Just for you, Sanjana 💕</h1>
   <div class="question" id="question"></div>
@@ -104,7 +100,7 @@ h1{
 </div>
 
 <script>
-/* floating hearts */
+// floating hearts
 setInterval(()=>{
   const h=document.createElement("div");
   h.className="heart";
@@ -114,65 +110,56 @@ setInterval(()=>{
   setTimeout(()=>h.remove(),7000);
 },500);
 
-/* music */
-let musicStarted=false;
-function playMusic(){
-  if(!musicStarted){
-    document.getElementById("bgMusic").play();
-    musicStarted=true;
-  }
-}
+let step = 0;
+const questionEl = document.getElementById("question");
+const optionsEl = document.getElementById("options");
+const rewardEl = document.getElementById("reward");
 
-let step=0;
-const q=document.getElementById("question");
-const o=document.getElementById("options");
-const r=document.getElementById("reward");
+function showQuestion(q, options, correctIndex, rewardText){
+  questionEl.innerText = q;
+  optionsEl.innerHTML = "";
 
-function render(question, answers, correctIndex, rewardText){
-  q.innerText=question;
-  o.innerHTML="";
-  answers.forEach((txt,i)=>{
-    const b=document.createElement("button");
-    b.className="option";
-    b.innerText=txt;
-    b.onclick=()=>{
-      playMusic();
-      if(i===correctIndex){
-        r.innerText=rewardText;
-        setTimeout(()=>{
-          r.innerText="";
+  options.forEach((text, index) => {
+    const btn = document.createElement("button");
+    btn.className = "option";
+    btn.innerText = text;
+    btn.onclick = () => {
+      if(index === correctIndex){
+        rewardEl.innerText = rewardText;
+        setTimeout(() => {
+          rewardEl.innerText = "";
           step++;
-          next();
-        },1200);
+          nextStep();
+        }, 1200);
       } else {
         alert("Oops 😄 Try again!");
       }
     };
-    o.appendChild(b);
+    optionsEl.appendChild(btn);
   });
 }
 
-function next(){
-  if(step===0){
-    render(
+function nextStep(){
+  if(step === 0){
+    showQuestion(
       "Where did we first meet?",
-      ["Online","Kotak parking lot 🚗","Rizz Café","During Diwali 🎆"],
+      ["Online", "Kotak parking lot 🚗", "Rizz Café", "During Diwali 🎆"],
       1,
       "Yayyy! Correct 💖 Chocolate ice cream for you 🍫🍦"
     );
   }
-  else if(step===1){
-    render(
+  else if(step === 1){
+    showQuestion(
       "What food do I like the most?",
-      ["Pizza 🍕","Pav Bhaji","Naan & Paneer","Pasta"],
+      ["Pizza 🍕", "Pav Bhaji", "Naan & Paneer", "Pasta"],
       0,
       "Yaaha hurrah! Kinder Joy for you 🥚✨"
     );
   }
-  else if(step===2){
-    render(
+  else if(step === 2){
+    showQuestion(
       "How many dates have we been on?",
-      ["8–10","11–13","14–16","17–19"],
+      ["8–10", "11–13", "14–16", "17–19"],
       2,
       "You remember everything 💕 Ice cream + chocolate 🍦🍫"
     );
@@ -183,24 +170,25 @@ function next(){
 }
 
 function finalQuestion(){
-  document.getElementById("card").innerHTML=`
+  document.getElementById("card").innerHTML = `
     <h1>One last question 🤍</h1>
     <div class="question">Will you be my Valentine?</div>
     <button class="yes" onclick="yesClick()">Yes 💖</button>
     <button class="no" id="noBtn">No 🙈</button>
   `;
 
-  const no=document.getElementById("noBtn");
-  const texts=["Really? 😏","Think again 🤍","Pleaseee 🥺","Nope 😌"];
-  let i=0;
-  no.onmouseover=()=>{
-    no.style.transform=\`translate(\${Math.random()*160-80}px,\${Math.random()*160-80}px)\`;
-    no.innerText=texts[i++%texts.length];
+  const noBtn = document.getElementById("noBtn");
+  const texts = ["Really? 😏", "Think again 🤍", "Pleaseee 🥺", "Nope 😌"];
+  let i = 0;
+
+  noBtn.onmouseover = () => {
+    noBtn.style.transform = `translate(${Math.random()*160-80}px,${Math.random()*160-80}px)`;
+    noBtn.innerText = texts[i++ % texts.length];
   };
 }
 
 function yesClick(){
-  document.body.innerHTML=`
+  document.body.innerHTML = `
     <div style="text-align:center;color:white;padding:20px;">
       <h1 style="font-family:Pacifico;font-size:32px;">Yayyyy 💖</h1>
       <p style="font-family:Handlee;font-size:20px;line-height:1.6;">
@@ -214,8 +202,8 @@ function yesClick(){
   `;
 }
 
-/* start */
-next();
+// start first question
+nextStep();
 </script>
 
 </body>
