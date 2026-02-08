@@ -48,6 +48,13 @@ h1{
   font-size:26px;
 }
 
+.subtitle{
+  font-family:Handlee;
+  font-size:16px;
+  color:#555;
+  margin:12px 0 22px;
+}
+
 .question{
   font-family:Handlee;
   font-size:18px;
@@ -69,6 +76,16 @@ h1{
   font-size:14px;
   color:#ff4d6d;
   margin-top:12px;
+}
+
+.start-btn{
+  background:#ff4d6d;
+  color:#fff;
+  padding:12px 28px;
+  border-radius:25px;
+  border:none;
+  font-size:16px;
+  cursor:pointer;
 }
 
 .yes{
@@ -93,10 +110,11 @@ h1{
 <body>
 
 <div class="card" id="card">
-  <h1>Just for you, Sanjana 💕</h1>
-  <div class="question" id="question"></div>
-  <div id="options"></div>
-  <div class="reward" id="reward"></div>
+  <h1>A special puzzle just for you, Sanjana 💕</h1>
+  <div class="subtitle">
+    A few questions to unlock something special ✨
+  </div>
+  <button class="start-btn" onclick="startQuiz()">START ❤️</button>
 </div>
 
 <script>
@@ -111,9 +129,22 @@ setInterval(()=>{
 },500);
 
 let step = 0;
-const questionEl = document.getElementById("question");
-const optionsEl = document.getElementById("options");
-const rewardEl = document.getElementById("reward");
+let questionEl, optionsEl, rewardEl;
+
+function startQuiz(){
+  document.getElementById("card").innerHTML = `
+    <h1>Just for you, Sanjana 💕</h1>
+    <div class="question" id="question"></div>
+    <div id="options"></div>
+    <div class="reward" id="reward"></div>
+  `;
+
+  questionEl = document.getElementById("question");
+  optionsEl = document.getElementById("options");
+  rewardEl = document.getElementById("reward");
+
+  nextStep();
+}
 
 function showQuestion(q, options, correctIndex, rewardText){
   questionEl.innerText = q;
@@ -192,18 +223,15 @@ function yesClick(){
     <div style="text-align:center;color:white;padding:20px;">
       <h1 style="font-family:Pacifico;font-size:32px;">Yayyyy 💖</h1>
       <p style="font-family:Handlee;font-size:20px;line-height:1.6;">
-        Sanjana Parmarrrr!!!!🤍<br>
+        Sanjanaaa 🤍<br>
         Thank you for being my Valentine 💕<br><br>
-        Please milooo jaldi<br>
+        Please milooo jaldiiibr>
         and celebrate this with me 🌸✨<br><br>
-        <i>I’ll be waiting 🥱🥱</i>
+        <i>I’ll be waiting 🤧🤧</i>
       </p>
     </div>
   `;
 }
-
-// start first question
-nextStep();
 </script>
 
 </body>
