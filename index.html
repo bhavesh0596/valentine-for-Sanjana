@@ -90,7 +90,7 @@ h1{
 </style>
 </head>
 
-<body onclick="startMusic()">
+<body>
 
 <audio id="bgMusic" loop>
   <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7c8b3c1e1c.mp3">
@@ -104,7 +104,7 @@ h1{
 </div>
 
 <script>
-/* hearts */
+/* floating hearts */
 setInterval(()=>{
   const h=document.createElement("div");
   h.className="heart";
@@ -115,11 +115,11 @@ setInterval(()=>{
 },500);
 
 /* music */
-let started=false;
-function startMusic(){
-  if(!started){
+let musicStarted=false;
+function playMusic(){
+  if(!musicStarted){
     document.getElementById("bgMusic").play();
-    started=true;
+    musicStarted=true;
   }
 }
 
@@ -136,6 +136,7 @@ function render(question, answers, correctIndex, rewardText){
     b.className="option";
     b.innerText=txt;
     b.onclick=()=>{
+      playMusic();
       if(i===correctIndex){
         r.innerText=rewardText;
         setTimeout(()=>{
@@ -183,7 +184,7 @@ function next(){
 
 function finalQuestion(){
   document.getElementById("card").innerHTML=`
-    <h1>One last thing 🤍</h1>
+    <h1>One last question 🤍</h1>
     <div class="question">Will you be my Valentine?</div>
     <button class="yes" onclick="yesClick()">Yes 💖</button>
     <button class="no" id="noBtn">No 🙈</button>
@@ -202,10 +203,12 @@ function yesClick(){
   document.body.innerHTML=`
     <div style="text-align:center;color:white;padding:20px;">
       <h1 style="font-family:Pacifico;font-size:32px;">Yayyyy 💖</h1>
-      <p style="font-family:Handlee;font-size:20px;">
-        Thanks for being my Valentine, Sanjanaaa 🤍<br><br>
+      <p style="font-family:Handlee;font-size:20px;line-height:1.6;">
+        Sanjanaaa 🤍<br>
+        Thank you for being my Valentine 💕<br><br>
         Please milooo soon<br>
-        and celebrate it with me 🌸✨
+        and celebrate this with me 🌸✨<br><br>
+        <i>I’ll be waiting 😊</i>
       </p>
     </div>
   `;
