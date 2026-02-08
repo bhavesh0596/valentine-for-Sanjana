@@ -1,30 +1,56 @@
-<!DOCTYPE html>
+l<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>A Special Puzzle for Sanjana ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Sanjana ❤️</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Pacifico&display=swap" rel="stylesheet">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Pacifico&family=Handlee&display=swap" rel="stylesheet">
 
 <style>
+* { box-sizing: border-box; }
+
 body {
   margin: 0;
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  font-family: 'Poppins', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Poppins', sans-serif;
+  overflow: hidden;
 }
 
+/* Floating hearts */
+.heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 18px;
+  animation: floatUp 6s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(0); opacity: 0.7; }
+  to { transform: translateY(-110vh); opacity: 0; }
+}
+
+/* Card */
 .card {
   background: white;
-  padding: 30px;
-  width: 350px;
-  border-radius: 25px;
+  padding: 28px;
+  width: 90%;
+  max-width: 360px;
+  border-radius: 26px;
   text-align: center;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-  animation: fadeIn 1s ease;
+  box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+  animation: popIn 0.8s ease;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
 h1 {
@@ -34,29 +60,39 @@ h1 {
 }
 
 .question {
-  font-size: 16px;
-  margin: 20px 0;
+  font-family: 'Handlee', cursive;
+  font-size: 18px;
+  margin: 22px 0;
+  color: #444;
 }
 
 .option {
   display: block;
+  width: 100%;
   margin: 10px 0;
-  padding: 10px;
-  border-radius: 20px;
+  padding: 12px;
+  border-radius: 22px;
   border: none;
-  cursor: pointer;
   background: #ffe5ec;
-  font-size: 14px;
+  font-size: 15px;
+  cursor: pointer;
 }
 
 .option:hover {
   background: #ffccd5;
 }
 
+.reward {
+  font-size: 14px;
+  color: #ff4d6d;
+  margin-top: 10px;
+}
+
+/* Valentine buttons */
 .yes {
   background: #ff4d6d;
   color: white;
-  padding: 12px 25px;
+  padding: 12px 30px;
   border-radius: 25px;
   border: none;
   font-size: 16px;
@@ -65,21 +101,20 @@ h1 {
 
 .no {
   background: #ddd;
-  padding: 12px 25px;
+  padding: 12px 30px;
   border-radius: 25px;
   border: none;
   position: absolute;
   cursor: pointer;
 }
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
-}
 </style>
 </head>
 
-<body>
+<body onclick="startMusic()">
+
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7c8b3c1e1c.mp3" type="audio/mpeg">
+</audio>
 
 <div class="card" id="card">
   <h1>A special puzzle just for you, Sanjana 💕</h1>
@@ -91,24 +126,57 @@ h1 {
   <div id="options">
     <button class="option" onclick="wrong()">Online</button>
     <button class="option" onclick="wrong()">Kotak parking lot</button>
-    <button class="option" onclick="wrong()">Rizz cafe</button>
-    <button class="option" onclick="next()">Diwali 🎆</button>
+    <button class="option" onclick="wrong()">Rizz Café</button>
+    <button class="option" onclick="correct('Yayyy! You got it right 💖 You deserve a chocolate ice cream 🍫🍦')">
+      During Diwali 🎆
+    </button>
   </div>
+
+  <div class="reward" id="reward"></div>
 </div>
 
 <script>
+/* Floating hearts */
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerText = "💖";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (4 + Math.random() * 3) + "s";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 7000);
+}, 500);
+
+/* Music (mobile safe) */
+let musicStarted = false;
+function startMusic() {
+  if (!musicStarted) {
+    document.getElementById("bgMusic").play();
+    musicStarted = true;
+  }
+}
+
 let step = 1;
-let noTexts = ["Really?", "Think again 😏", "Pleaseee 🥺", "Nope 😌", "Try harder 😜"];
+let noTexts = ["Really? 😏", "Think again 🤍", "Pleaseee 🥺", "Nope 😌", "Not allowed 😜"];
 
 function wrong() {
-  alert("Hmm… not this one 😉");
+  alert("Oops 😄 Try again, you know this one!");
+}
+
+function correct(msg) {
+  document.getElementById("reward").innerText = msg;
+
+  setTimeout(() => {
+    document.getElementById("reward").innerText = "";
+    next();
+  }, 1200);
 }
 
 function next() {
   if (step === 1) {
-    document.getElementById("question").innerText = "What food do I like the most?";
-    document.getElementById("options").innerHTML = `
-      <button class="option" onclick="next()">Pizza 🍕</button>
+    question.innerText = "What food do I like the most?";
+    options.innerHTML = `
+      <button class="option" onclick="correct('Yaaa! Correct answer 💖 You deserve a Kinder Joy 🥚✨')">Pizza 🍕</button>
       <button class="option" onclick="wrong()">Pav Bhaji</button>
       <button class="option" onclick="wrong()">Naan & Paneer Tikka Masala</button>
       <button class="option" onclick="wrong()">Pasta</button>
@@ -116,11 +184,11 @@ function next() {
     step++;
   }
   else if (step === 2) {
-    document.getElementById("question").innerText = "How many dates have we completed till now?";
-    document.getElementById("options").innerHTML = `
+    question.innerText = "How many dates have we been on so far?";
+    options.innerHTML = `
       <button class="option" onclick="wrong()">8–10 times</button>
       <button class="option" onclick="wrong()">11–13 times</button>
-      <button class="option" onclick="next()">14–16 times 💕</button>
+      <button class="option" onclick="correct('Yayyy 💕 You remember everything! Ice cream + chocolate for you 🍦🍫')">14–16 times</button>
       <button class="option" onclick="wrong()">17–19 times</button>
     `;
     step++;
@@ -131,10 +199,9 @@ function next() {
 }
 
 function finalQuestion() {
-  document.getElementById("card").innerHTML = `
-    <h1>One last question, Sanju ❤️</h1>
-    <p class="question">Will you be my Valentine?</p>
-
+  card.innerHTML = `
+    <h1>One last question, Sanju 🤍</h1>
+    <div class="question">Will you be my Valentine?</div>
     <button class="yes" onclick="yesClick()">Yes 💖</button>
     <button class="no" id="noBtn">No 🙈</button>
   `;
@@ -143,9 +210,7 @@ function finalQuestion() {
   let count = 0;
 
   noBtn.addEventListener("mouseover", () => {
-    const x = Math.random() * 200 - 100;
-    const y = Math.random() * 200 - 100;
-    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    noBtn.style.transform = \`translate(\${Math.random()*200-100}px,\${Math.random()*200-100}px)\`;
     noBtn.innerText = noTexts[count % noTexts.length];
     count++;
   });
@@ -153,13 +218,14 @@ function finalQuestion() {
 
 function yesClick() {
   document.body.innerHTML = `
-    <div style="text-align:center;color:white;">
-      <h1 style="font-family:Pacifico;font-size:32px;">
-        Yayyy 💖
-      </h1>
-      <p style="font-size:18px;">
-        Sanjana Parmar,  
-        you just made my heart very very happy 🤍
+    <div style="text-align:center;color:white;padding:20px;">
+      <h1 style="font-family:Pacifico;font-size:32px;">Yayyyy 💖</h1>
+      <p style="font-family:Handlee;font-size:20px;line-height:1.6;">
+        Sanjanaaa 🤍<br>
+        Thank you for being my Valentine 💕<br><br>
+        Please milooo soon<br>
+        and celebrate this with me 🌸✨<br><br>
+        <i>I’ll be waiting 😊</i>
       </p>
     </div>
   `;
